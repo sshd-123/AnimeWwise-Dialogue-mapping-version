@@ -1,4 +1,4 @@
-# AnimeWwise-Dialogue-mapping-version_Star-Rail
+# AnimeWwise-Dialogue-mapping-version
 
 **Last Updated: July 17, 2026**
 
