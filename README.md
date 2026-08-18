@@ -289,7 +289,7 @@ Please include:
 
 ---
 
-# AnimeWwise-Dialogue-mapping-version_Star-Rail
+# AnimeWwise-Dialogue-mapping-version
 
 **最后更新：2026年7月17日**
 
