@@ -1,6 +1,6 @@
 # AnimeWwise-Dialogue-mapping-version
 
-**Last Updated: July 17, 2026**
+
 
 An enhanced version of AnimeWwise with built-in ASR (Automatic Speech Recognition), voice text matching for Honkai: Star Rail and Genshin Impact, and a portable Python environment.
 
@@ -291,7 +291,7 @@ Please include:
 
 # AnimeWwise-Dialogue-mapping-version
 
-**最后更新：2026年7月17日**
+
 
 AnimeWwise 的增强版本，内置 ASR（自动语音识别）、崩坏：星穹铁道与原神语音台词匹配功能，以及便携 Python 环境。
 
