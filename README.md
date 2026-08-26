@@ -3,6 +3,7 @@
 An enhanced version of AnimeWwise with built-in ASR (Automatic Speech Recognition), **full-language direct dialogue mapping** for **Honkai: Star Rail**, **Genshin Impact**, and **Zenless Zone Zero**, plus a portable Python environment.
 
 **Version**: v2026.8.26
+**Main Author**: [sshd-123](https://github.com/sshd-123)
 
 ![image](https://github.com/user-attachments/assets/ce2c8b19-82a2-42fc-a149-ed9ffbb7c54b)
 
@@ -335,6 +336,9 @@ Please include:
 
 ## Credits
 
+### Main Author
+- [@sshd-123](https://github.com/sshd-123) - Creator and maintainer of the AnimeWwise-Dialogue mapping version
+
 ### Special Thanks
 - [@simon300000](https://github.com/simon300000) - Mapping method and algorithm support ([zenless-voice](https://github.com/simon300000/zenless-voice))
 - [@Dimbreath](https://github.com/Dimbreath) - Dataset support (AnimeGameData, TurnBasedGameData, ZZZData)
@@ -368,6 +372,7 @@ Please include:
 AnimeWwise 的增强版本，内置 ASR（自动语音识别）、**崩坏：星穹铁道**、**原神**和**绝区零**的**全语言台词直接映射**功能，以及便携 Python 环境。
 
 **版本**: v2026.8.26
+**主要作者**: [sshd-123](https://github.com/sshd-123)
 
 ![image](https://github.com/user-attachments/assets/ce2c8b19-82a2-42fc-a149-ed9ffbb7c54b)
 
@@ -699,6 +704,9 @@ AnimeWwise-Dialogue mapping version-by_sshd/
 ---
 
 ## 致谢
+
+### 主要作者
+- [@sshd-123](https://github.com/sshd-123) - AnimeWwise 台词映射版本的创建者与维护者
 
 ### 特别感谢
 - [@simon300000](https://github.com/simon300000) - 映射方法与算法支持（[zenless-voice](https://github.com/simon300000/zenless-voice)）
