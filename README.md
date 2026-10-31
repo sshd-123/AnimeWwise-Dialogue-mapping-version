@@ -2,7 +2,7 @@
 
 Extract voice & dialogue audio from **Genshin Impact**, **Honkai: Star Rail**, **Zenless Zone Zero** and **Arknights: Endfield** — with original filenames restored, optional dialogue text (`.txt` next to each clip), and a fully portable Python environment.
 
-![version](https://img.shields.io/badge/version-2026.10.4-blue)
+![version](https://img.shields.io/badge/version-2026.10.31-blue)
 ![platform](https://img.shields.io/badge/platform-Windows%20x64-lightgrey)
 ![python](https://img.shields.io/badge/python-3.11%20bundled-informational)
 ![license](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
@@ -32,25 +32,55 @@ A `.map` is what turns meaningless hash filenames into real paths. A plain map c
 
 A map is self-contained: **one `.map` file is all you copy.** The optional `<map>.banks.tsv` next to it is just a readable copy of the bank table.
 
-### ⚠️ Maps do not update themselves
+### Automatic updates (maps + program)
 
-The program's *check for updates* only reads the **upstream** project's index and pulls
-the **upstream** `.map` files from it. It knows nothing about the maps published here, so
-a map you downloaded from this repository will **never** be replaced or refreshed by the
-program.
+On every launch the program silently checks **this** repository:
 
-When a new game version arrives:
+* **Maps** — the newest `*.map` at the repository root is compared with `maps\`. If a newer
+  version exists you are asked whether to download it. The download goes to a `.part` file
+  first and only replaces the old map after its size and `ESFM` header have been verified;
+  older maps of the same game are then removed. No manual step is needed.
+* **Program package** — `app_version.json` holds the installed version and is the only place
+  the title bar and About box read it from. If GitHub Releases has a newer package you are
+  asked whether to open **Program Update**, which is also the button at the right end of the
+  menu bar. That window lists every release (older ones included), downloads and extracts the
+  chosen `.7z`, and applies it with visible progress. Applying closes the program, lets a
+  small helper overwrite the files and restarts it automatically.
 
-1. Download the matching map from this repository (or rebuild it with the map maker),
-2. drop it into `maps\`,
-3. and delete the old one.
+The updater uses the Windows certificate store, so local GitHub accelerators such as Steam++
+work without disabling TLS verification. An interrupted download resumes from its `.part`
+file; the old map/program is never touched until the new file is complete and verified.
 
-Note that the updater compares version numbers and will happily add an upstream map next
-to ours (for example an upstream `hk4e.map` beside our `hk4e_7.1.map`) if the upstream
-index looks newer. If you end up with two maps for one game, keep the one you want and
-remove the other — the program offers both in the map list.
+**When publishing a release:** set `"version"` in `app_version.json` to the release version
+(the same number used in the tag) before packing. That file is what the installed program
+reports and what the next update check compares against.
 
 ---
+
+## What's new — 2026.10.31
+
+### New
+
+- **Automatic updates for maps and the program package.** Every launch silently checks this
+  repository. Newer maps are offered for download (verified `.part` → atomic replace); a newer
+  packaged release opens the new **Program Update** window at the right end of the menu bar. It
+  lists every release, downloads and extracts the chosen `.7z` with visible progress, then
+  restarts the app after applying the files. See *Automatic updates* above.
+- **One source of truth for the version.** The window title, About box and updater all read
+  `app_version.json`; the hardcoded version constant is gone.
+- **Startup no longer freezes.** The two ~10 s synchronous loads (the 200 MB Genshin TSV and all
+  voice-text data) now run off the UI thread. The TSV is parsed on demand inside the extraction
+  thread and cached, and the Genshin version label reads the TSV metadata instead of scanning the
+  whole 200 MB file.
+- **Complete zh/en coverage for the remaining UI gaps** — the timbre separator tool's dialogs,
+  labels and status messages, the flat-output checkbox, the “No map” entry, the audio-info hint
+  and the TSV-build warnings.
+
+### Fixes
+
+- Startup responsiveness: timers and clicks are processed while local dialogue data loads.
+- The **Load files** button is disabled (with a tooltip) until the background data load finishes,
+  so text extraction cannot start with half-loaded data.
 
 ## What's new — 2026.10.4
 
@@ -280,7 +310,7 @@ and adapt for non-commercial use, with attribution and share-alike.
 
 从**原神**、**崩坏：星穹铁道**、**绝区零**、**明日方舟：终末地**中提取语音与台词音频：还原原始文件名、可选生成台词 `.txt`、内置便携 Python 环境，**无需安装任何东西**。
 
-**版本 2026.10.4** · 作者 [@sshd-123](https://github.com/sshd-123) · 基于 [@Escartem](https://github.com/Escartem) 的 [AnimeWwise](https://github.com/Escartem/AnimeWwise)
+**版本 2026.10.31** · 作者 [@sshd-123](https://github.com/sshd-123) · 基于 [@Escartem](https://github.com/Escartem) 的 [AnimeWwise](https://github.com/Escartem/AnimeWwise)
 
 ## ⚠️ 请使用自制 map（强烈建议）
 
@@ -298,20 +328,39 @@ map 决定哈希文件名能否还原成真实路径。普通 map 只能命名"�
 
 map 是自包含的：**只需要复制一个 `.map` 文件**；旁边的 `.banks.tsv` 只是给人看的副本。
 
-### ⚠️ map 不会自己更新
+### 自动更新（地图与程序）
 
-程序里的「检查更新」**只会去上游项目**拉取索引和它的 `.map` 文件，完全不知道本仓库发布的 map。
-因此：**从本仓库下载的 map 永远不会被程序替换或刷新。**
+每次启动时，程序会静默检查**本仓库**：
 
-游戏更新后请手动操作：
+* **地图**：读取仓库根目录最新的 `*.map`，与 `maps\` 里的版本比较。有更新时询问是否下载；
+  下载先写入 `.part`，校验大小和 `ESFM` 文件头后才原子替换，替换成功后自动删除同游戏的旧版 map。
+* **整合包**：`app_version.json` 里的版本号是唯一来源（标题栏和「关于」都读它）。如果 GitHub
+  Releases 有更高版本，会询问是否打开「程序更新」；该窗口也可由菜单栏最右侧的「程序更新」按钮直接打开。
+  窗口列出全部版本（含旧版），可选择任意版本下载、解压并覆盖；覆盖前程序会自动退出，
+  由独立脚本完成文件覆盖并重新启动程序，全过程有步骤与进度显示。
 
-1. 从本仓库下载对应版本的 map（或用 map 制作器重建）
-2. 放入 `maps\`
-3. 删掉旧的
+更新使用 Windows 证书存储，兼容 Steam++ 等本地 GitHub 加速器，不会因为证书被替换而失败；
+下载中断后可从 `.part` 续传，新文件完整下载并通过校验前不会改动旧地图/旧程序。
 
-另外，更新器只比对版本号，**可能会在我们的 map 旁边额外加一份上游 map**
-（例如在 `hk4e_7.1.map` 旁边出现 `hk4e.map`）。若同一游戏出现两份 map，
-保留你要的那份、删掉另一份即可（地图下拉列表会同时列出）。
+**发布新版本时**：先把 `app_version.json` 里的 `"version"` 改成与该次 release tag 相同的版本号，再打包。
+程序显示的版本和下次启动的更新检查都读取这个文件。
+
+## 更新内容（2026.10.31）
+
+### 新增
+
+- **地图与整合包自动更新**：每次启动静默检查本仓库。地图有新版时提示下载（`.part` 校验后原子替换）；
+  整合包有新版时提示打开菜单栏最右侧的 **「程序更新」** 窗口，可列出全部版本、显示下载/解压进度并自动覆盖重启。
+- **版本号单一来源**：标题栏、「关于」和更新检查统一读取 `app_version.json`，不再硬编码。
+- **启动不再卡死**：原先两个约 10 秒的同步加载（200MB 原神 TSV、全部台词数据）全部移出 UI 线程；
+  TSV 改为提取时在后台解析并缓存，原神版本标签改读 TSV 元数据，不再逐行扫描 200MB。
+- **补齐中英文界面翻译**：音色分离工具的文件对话框/提示/状态、扁平化输出选项、「无地图」条目、
+  音频信息提示、TSV 构建警告等。
+
+### 修复
+
+- 启动期间定时器和点击可正常响应；本地台词数据加载完成前「加载文件」按钮置灰并显示提示，
+  避免数据未就绪就提取。
 
 ## 更新内容（2026.10.4）
 
@@ -331,7 +380,7 @@ map 是自包含的：**只需要复制一个 `.map` 文件**；旁边的 `.bank
 
 ### 修复
 
-- **版本号统一**：标题栏与「关于」共用一个常量（以前「关于」显示的是内部数据计数器）。
+- **版本号统一**：标题栏与「关于」都读取 `app_version.json`，自动更新后无需改代码即可显示新版本。
 - **启动不再被网络阻塞**：版本检查原本在窗口构建期间同步执行、超时 10–15 秒，现改为界面显示后再执行。
 - **启动的「有新版本」提示不再指向上游程序**：原先拿本项目的索引与上游仓库比对并提示更新程序，
   照着做会替换成本仓库以外的版本 —— 从而**丢失 bank 命名与本仓库发布的 map**（顺带修掉一处拼写错误）。
@@ -388,7 +437,7 @@ FFmpeg、vgmstream、hpatchz、Node.js、HoyoDown 已随程序自带，无需手
 ### 第 2 步 —— 获取 map
 
 把需要的 map 放进 `maps\`：从本仓库下载，或用配套的 **map 制作器** 自制。
-map **不会自动下载**，详见下方「map 不会自己更新」一节。
+程序启动时会自动检查本仓库的 map 版本并提示更新，详见下方「自动更新」一节。
 
 ### 第 3 步 —— 运行
 
