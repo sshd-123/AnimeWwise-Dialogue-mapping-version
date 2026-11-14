@@ -2,7 +2,7 @@
 
 Extract voice & dialogue audio from **Genshin Impact**, **Honkai: Star Rail**, **Zenless Zone Zero** and **Arknights: Endfield** — with original filenames restored, optional dialogue text (`.txt` next to each clip), and a fully portable Python environment.
 
-![version](https://img.shields.io/badge/version-2026.10.31-blue)
+![version](https://img.shields.io/badge/version-2026.11.8-blue)
 ![platform](https://img.shields.io/badge/platform-Windows%20x64-lightgrey)
 ![python](https://img.shields.io/badge/python-3.11%20bundled-informational)
 ![license](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-lightgrey)
@@ -28,7 +28,7 @@ A `.map` is what turns meaningless hash filenames into real paths. A plain map c
 | Category folders for filtering (Genshin: `Dialog` / `Fetter` / `AnimatorEvent` / `Card` / …) | ❌ | ✅ |
 | Self-check before shipping | ❌ | ✅ the builder refuses to emit a map that misses dataset paths |
 
-**Result on the current versions:** Genshin 841,704 entries (99.6 % of the installed voice files), Star Rail 1,072,707 entries **plus** 5,764 named bank files — of which **3,011 are character battle voice covering 116 characters** (`voicbank\Ev_vo_avatar_atk_cast_feixiao.wem`, `voicbank\Ev_vo_avatar_skill_cast01_castorice_…`, …).
+**Result on the current versions:** Genshin 860,656 entries (99.6 % of the installed voice files), Star Rail 1,072,707 entries **plus** 5,764 named bank files — of which **3,011 are character battle voice covering 116 characters** (`voicbank\Ev_vo_avatar_atk_cast_feixiao.wem`, `voicbank\Ev_vo_avatar_skill_cast01_castorice_…`, …).
 
 A map is self-contained: **one `.map` file is all you copy.** The optional `<map>.banks.tsv` next to it is just a readable copy of the bank table.
 
@@ -56,6 +56,21 @@ file; the old map/program is never touched until the new file is complete and ve
 reports and what the next update check compares against.
 
 ---
+
+## What's new — 2026.11.8
+
+### New
+
+- **“Find speaker by dialogue” accuracy fix.** Speaker/role names are now taken from the
+  map/TSV data first, with path-derived names only as a fallback. Matching normalizes
+  full-width/half-width characters, punctuation and rich-text tags; multi-line and whole-paragraph
+  queries are supported, exact matches rank before fuzzy ones, and a score column shows how
+  confident each match is. The result no longer returns a filename fragment instead of the
+  in-game character.
+- **Custom TSV and `.txt` input.** Point the tool at any supported dialogue TSV, or load a `.txt`
+  list directly; an optional fuzzy mode handles ASR-style text.
+- **Genshin Impact 7.2 map included** (`maps/hk4e_7.2.map`, 860,656 entries), with the map index
+  updated to 7.2.
 
 ## What's new — 2026.10.31
 
@@ -130,10 +145,10 @@ reports and what the next update check compares against.
 
 | Map | Version | Notes |
 |---|---|---|
-| `hk4e_7.1.map` | 7.1 | 841,704 entries, category folders |
+| `hk4e_7.2.map` | 7.2 | 860,656 entries, category folders |
 | `hkrpg_4.6.map` | 4.6 | 1,072,707 entries, **bank table embedded** (262,903 B) |
 | `hkrpg_4.6.banks.tsv` | — | optional readable copy of the bank table |
-| `nap_3.2.0.map` | 3.2.0 | |
+| `nap_3.3.0.map` | 3.3.0 | |
 | `beyond.map` | 1.3 | |
 
 The Star Rail table gained **1,843 events** the game builds at runtime from templates
@@ -147,9 +162,9 @@ uses the deletion list as an extra name source (**+572** entries that used to be
 
 | Game | Map version | Dialogue text | Notes |
 |------|-------------|---------------|-------|
-| **Genshin Impact** | **7.1** | ✅ direct mapping | all 4 languages, category folders |
+| **Genshin Impact** | **7.2** | ✅ direct mapping | all 4 languages, category folders |
 | **Honkai: Star Rail** | **4.6** | ✅ direct mapping | all 4 languages, bank audio named |
-| **Zenless Zone Zero** | **3.2.0** | ✅ direct + TSV | CHS / EN / JP / KR |
+| **Zenless Zone Zero** | **3.3.0** | ✅ direct + TSV | CHS / EN / JP / KR |
 | **Arknights: Endfield** | 1.3 | ❌ | VFS-based storage |
 
 ---
@@ -310,7 +325,7 @@ and adapt for non-commercial use, with attribution and share-alike.
 
 从**原神**、**崩坏：星穹铁道**、**绝区零**、**明日方舟：终末地**中提取语音与台词音频：还原原始文件名、可选生成台词 `.txt`、内置便携 Python 环境，**无需安装任何东西**。
 
-**版本 2026.10.31** · 作者 [@sshd-123](https://github.com/sshd-123) · 基于 [@Escartem](https://github.com/Escartem) 的 [AnimeWwise](https://github.com/Escartem/AnimeWwise)
+**版本 2026.11.8** · 作者 [@sshd-123](https://github.com/sshd-123) · 基于 [@Escartem](https://github.com/Escartem) 的 [AnimeWwise](https://github.com/Escartem/AnimeWwise)
 
 ## ⚠️ 请使用自制 map（强烈建议）
 
@@ -324,7 +339,7 @@ map 决定哈希文件名能否还原成真实路径。普通 map 只能命名"�
 - **分类目录**（原神：`Dialog` / `Fetter` / `AnimatorEvent` / `Card` 等，便于筛选）
 - **发布前自检**：漏读数据集路径时构建器会拒绝产出
 
-当前版本实测：原神 **841,704** 条（覆盖装机的 99.6%），崩铁 **1,072,707** 条，另有 **5,764** 个 bank 文件被命名，其中 **3,011 个是角色战斗语音、覆盖 116 个角色**。
+当前版本实测：原神 **860,656** 条（覆盖装机的 99.6%），崩铁 **1,072,707** 条，另有 **5,764** 个 bank 文件被命名，其中 **3,011 个是角色战斗语音、覆盖 116 个角色**。
 
 map 是自包含的：**只需要复制一个 `.map` 文件**；旁边的 `.banks.tsv` 只是给人看的副本。
 
@@ -344,6 +359,17 @@ map 是自包含的：**只需要复制一个 `.map` 文件**；旁边的 `.bank
 
 **发布新版本时**：先把 `app_version.json` 里的 `"version"` 改成与该次 release tag 相同的版本号，再打包。
 程序显示的版本和下次启动的更新检查都读取这个文件。
+
+## 更新内容（2026.11.8）
+
+### 新增
+
+- **修复「通过台词查找说话人」的匹配/角色识别精度**：优先使用 map/TSV 里的 speaker 字段，
+  匹配前统一处理全角/半角、标点、富文本标签；支持多行、整段台词查询；精确匹配优先于近似匹配，
+  结果表新增匹配分数列，角色名不再被路径片段覆盖或丢失。
+- **自定义 TSV 与 .txt 输入**：可选择任意受支持的台词 TSV，或直接载入 .txt 文本；
+  可开启近似匹配，适配 ASR 识别文本。
+- **内置原神 7.2 地图**（`maps/hk4e_7.2.map`，860,656 条），地图索引同步为 7.2。
 
 ## 更新内容（2026.10.31）
 
@@ -397,10 +423,10 @@ map 是自包含的：**只需要复制一个 `.map` 文件**；旁边的 `.bank
 
 | 地图 | 版本 | 说明 |
 |---|---|---|
-| `hk4e_7.1.map` | 7.1 | 841,704 条，带分类目录 |
+| `hk4e_7.2.map` | 7.2 | 860,656 条，带分类目录 |
 | `hkrpg_4.6.map` | 4.6 | 1,072,707 条，**内嵌 bank 命名表**（262,903 B）|
 | `hkrpg_4.6.banks.tsv` | — | 命名表的可选可读副本 |
-| `nap_3.2.0.map` | 3.2.0 | |
+| `nap_3.3.0.map` | 3.3.0 | |
 | `beyond.map` | 1.3 | |
 
 崩铁命名表补回了游戏运行时用模板拼出的 **1,843 个事件名**（`Ev_vo_avatar_turn_begin_{0}` …），
@@ -411,9 +437,9 @@ map 是自包含的：**只需要复制一个 `.map` 文件**；旁边的 `.bank
 
 | 游戏 | map 版本 | 台词匹配 |
 |---|---|---|
-| **原神** | **7.1** | ✅ 直接映射（4 语言，带分类目录）|
+| **原神** | **7.2** | ✅ 直接映射（4 语言，带分类目录）|
 | **崩坏：星穹铁道** | **4.6** | ✅ 直接映射（4 语言，bank 音频可命名）|
-| **绝区零** | **3.2.0** | ✅ 直接映射 + TSV（中英日韩）|
+| **绝区零** | **3.3.0** | ✅ 直接映射 + TSV（中英日韩）|
 | **明日方舟：终末地** | 1.3 | ❌（VFS 存储）|
 
 ## 快速开始 —— 先构建，再运行
